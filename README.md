@@ -1,2 +1,2 @@
 # algorand-airgap
-Public repo for integrating algorand to airrgap via isolated modules
+Public repo for integrating algorand to airgap via isolated modules
