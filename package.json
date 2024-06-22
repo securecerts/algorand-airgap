@@ -1,0 +1,25 @@
+{
+  "name": "algorand-airgap",
+  "version": "1.0.0",
+  "description": "Public repo for integrating algorand to airgap via isolated modules",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/securecerts/algorand-airgap.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/securecerts/algorand-airgap/issues"
+  },
+  "homepage": "https://github.com/securecerts/algorand-airgap#readme",
+  "dependencies": {
+    "@airgap/module-kit": "^0.13.27"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.2"
+  }
+}
