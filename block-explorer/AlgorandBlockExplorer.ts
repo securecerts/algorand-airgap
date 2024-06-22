@@ -2,7 +2,7 @@
 
 import { AirGapBlockExplorer, BlockExplorerMetadata } from "@airgap/module-kit";
 
-class MyProtocolBlockExplorer implements AirGapBlockExplorer {
+export class AlgorandBlockExplorer implements AirGapBlockExplorer {
   /**
    * Get this block explorer's metadata.
    *

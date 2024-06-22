@@ -1,6 +1,19 @@
-import { AirGapModule } from "@airgap/module-kit";
-import { MyModule } from "./module.ts";
+import { AlgorandBlockExplorer } from './block-explorer/AlgorandBlockExplorer'
+import { AlgorandModule } from './module/AlgorandModule'
+import {  } from './protocol/AlgorandProtocol'
 
-export function create(): AirGapModule {
-  return new MyModule();
+// Module
+
+export { AlgorandModule }
+
+// Protocol
+
+export {
+  
 }
+
+// Block Explorer
+
+export { AlgorandBlockExplorer }
+
+// Serializer

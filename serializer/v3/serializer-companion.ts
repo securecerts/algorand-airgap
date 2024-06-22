@@ -3,7 +3,7 @@
 import { AirGapV3SerializerCompanion, SignedTransaction, UnsignedTransaction, V3SchemaConfiguration } from '@airgap/module-kit'
 import { IACMessageType, TransactionSignRequest, TransactionSignResponse } from '@airgap/serializer'
 
-class MyV3SerializerCompanion implements AirGapV3SerializerCompanion {
+export class AlgorandV3SerializerCompanion implements AirGapV3SerializerCompanion {
     /**
      * A list of AirGap's V3 Serializer schema configurations.
      *
