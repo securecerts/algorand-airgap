@@ -3,32 +3,24 @@
 import { AirGapBlockExplorer, BlockExplorerMetadata } from "@airgap/module-kit";
 
 export class AlgorandBlockExplorer implements AirGapBlockExplorer {
-  /**
-   * Get this block explorer's metadata.
-   *
-   * @returns The metadata
-   */
-  getMetadata(): Promise<BlockExplorerMetadata> {
-    /* ... */
+
+  private readonly metadata: BlockExplorerMetadata = {
+    name: 'Allo',
+    url: this.url
   }
 
-  /**
-   * Create a URL that links to the account's details page.
-   *
-   * @param address - The account's address
-   * @returns The URL of the account's details page
-   */
-  createAddressUrl(address: string): Promise<string> {
-    /* ... */
+  public constructor(private readonly url: string) {}
+
+  public async getMetadata(): Promise<BlockExplorerMetadata> {
+    return this.metadata
   }
 
-  /**
-   * Create a URL that links to the transaction's details page.
-   *
-   * @param transactionId - The transaction's identifier
-   * @returns The URL of the transaction's details page
-   */
-  createTransactionUrl(transactionId: string): Promise<string> {
-    /* ... */
+  public async createAddressUrl(address: string): Promise<string> {
+    return `${this.url}/account/${address}`
   }
+
+  public async createTransactionUrl(transactionId: string): Promise<string> {
+    return `${this.url}/tx/${transactionId}`
+  }
+
 }
