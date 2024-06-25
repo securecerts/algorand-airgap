@@ -1,103 +1,84 @@
+import { Domain, MainProtocolSymbols } from '@airgap/coinlib-core'
+import { ConditionViolationError } from '@airgap/coinlib-core/errors'
 import {
     AirGapBlockExplorer,
     AirGapModule,
     AirGapOfflineProtocol,
     AirGapOnlineProtocol,
+    AirGapProtocol,
     AirGapV3SerializerCompanion,
     createSupportedProtocols,
     ModuleNetworkRegistry,
     ProtocolConfiguration,
     ProtocolNetwork
 } from '@airgap/module-kit'
-import { MyProtocol, MY_PROTOCOL_MAINNET_NETWORK, MY_PROTOCOL_TESTNET_NETWORK } from '../protocol-full.ts'
-import { MyOfflineProtocol } from '../protocol-offline.ts'
-import { MY_ONLINE_PROTOCOL_MAINNET_NETWORK } from '../protocol-online.ts'
-import { MyProtocolBlockExplorer } from './protocol-full-block-explorer.ts'
-import { MyOnlineProtocolBlockExplorer } from '../block-explorer/AlloExplorer.ts'
-import { MyV3SerializerCompanion } from '../v3serializer.ts'
+import { AlgorandBlockExplorer } from '../block-explorer/AlgorandBlockExplorer'
+import { createAlgorandProtocol, ALGORAND_MAINNET_PROTOCOL_NETWORK} from '../protocol/AlgorandProtocol'
+import { AlgorandV3SerializerCompanion } from '../serializer/v3/serializer-companion'
+import { AlgorandProtocolNetwork} from '../types/protocol'
 
-export class AlgorandModule implements AirGapModule {
-    /**
-     * A set of protocols supported by this module along with their configuration.
-     * Grouped by the protocol identifier.
-     */
-    supportedProtocols: Record<string, ProtocolConfiguration> = createSupportedProtocols(
-        { /* online protocols */
-            'online-only-protocol': new ModuleNetworkRegistry({
-                supportedNetworks: [MY_ONLINE_PROTOCOL_MAINNET_NETWORK]
-            }),
-            'offline-and-online-protocol': new ModuleNetworkRegistry({
-                supportedNetworks: [MY_PROTOCOL_MAINNET_NETWORK, MY_PROTOCOL_TESTNET_NETWORK]
-            })
-        },
-        [ /* offline protocols */
-            'offline-only-protocol',
-            'offline-and-online-protocol'
-        ]
-    )
+//type SupportedProtocols = MainProtocolSymbols.ALGORAND
 
-    /**
-     * Create an offline protocol instance, if supported.
-     *
-     * @param identifier - The identifier of the protocol whose instance should be created
-     * @returns A protocol instance or `undefined` if the type of protocol is not supported
-     */
-    createOfflineProtocol(identifier: string): Promise<AirGapOfflineProtocol | undefined> {
-        switch (identifier) {
-            case 'offline-only-protocol':
-                return new MyOfflineProtocol()
-            case 'offline-and-online-protocol':
-                return new MyProtocol()
-            default:
-                return undefined
+export class AlgorandModule implements AirGapModule 
+{
+
+    private readonly networkRegistries: Record<string, ModuleNetworkRegistry>
+    public readonly supportedProtocols: Record<string, ProtocolConfiguration>
+
+    public constructor() {
+        const networkRegistry: ModuleNetworkRegistry = new ModuleNetworkRegistry({
+          supportedNetworks: [ALGORAND_MAINNET_PROTOCOL_NETWORK]
+        })
+    
+        this.networkRegistries = {
+          [MainProtocolSymbols.ALGORAND]: networkRegistry
         }
+        this.supportedProtocols = createSupportedProtocols(this.networkRegistries)
+
     }
 
-    /**
-     * Create an online protocol instance, if supported.
-     *
-     * @param identifier - The identifier of the protocol whose instance should be created
-     * @param networkOrId - A protocol network or its ID which should be used to create the protocol instance
-     * @returns A protocol instance or `undefined` if the type of protocol is not supported
-     */
-    createOnlineProtocol(identifier: string, networkOrId?: string | ProtocolNetwork): Promise<AirGapOnlineProtocol | undefined> {
-        const network = /* get the network configuration based on `networkOrId` */
-
-        switch (identifier) {
-            case 'online-only-protocol':
-                return new MyOnlineProtocol(network)
-            case 'offline-and-online-protocol':
-                return new MyProtocol(network)
-            default:
-                return undefined
-        }
+    public async createOfflineProtocol(identifier: string): Promise<AirGapOfflineProtocol | undefined> {
+        return this.createProtocol(identifier)
     }
 
-   /**
-     * Create a block explorer, if online protocols are supported.
-     *
-     * @param identifier - The identifier of the protocol for which a block explorer instance should be created
-     * @param networkOrId - A protocol network or its ID which should be used to create the block explorer instance
-     * @returns A block explorer instance or `undefined` if online protocols aren't supported
-     */
-    createBlockExplorer(identifier: string, networkOrId?: string | ProtocolNetwork): Promise<AirGapBlockExplorer | undefined> {
-        const network = /* get the network configuration based on `networkOrId` */
-
-        switch (identifier) {
-            case 'online-only-protocol':
-                return new MyOnlineProtocolBlockExplorer(network)
-            case 'offline-and-online-protocol':
-                return new MyProtocolBlockExplorer(network)
-            default:
-                return undefined
+    public async createOnlineProtocol(
+        identifier: string,
+        networkOrId?: AlgorandProtocolNetwork | string
+      ): Promise<AirGapOnlineProtocol | undefined> {
+        const network: ProtocolNetwork | undefined =
+          typeof networkOrId === 'object' ? networkOrId : this.networkRegistries[identifier]?.findNetwork(networkOrId)
+    
+        if (network === undefined) {
+          throw new ConditionViolationError(Domain.ALGORAND, 'Protocol network type not supported.')
         }
+    
+        return this.createProtocol(identifier, network)
     }
 
-    /**
-     * Create AirGap's V3 Serializer companion object.
-     * @returns A V3 Serializer companion instance.
-     */
-    createV3SerializerCompanion(): Promise<AirGapV3SerializerCompanion> {
-        return new MyV3SerializerCompanion()
+    public async createBlockExplorer(
+        identifier: string,
+        networkOrId?: AlgorandProtocolNetwork | string
+      ): Promise<AirGapBlockExplorer | undefined> {
+        const network: ProtocolNetwork | undefined =
+          typeof networkOrId === 'object' ? networkOrId : this.networkRegistries[identifier]?.findNetwork(networkOrId)
+    
+        if (network === undefined) {
+          throw new ConditionViolationError(Domain.ALGORAND, 'Block Explorer network type not supported.')
+        }
+    
+        return new AlgorandBlockExplorer(network.blockExplorerUrl)
+    }
+
+    public async createV3SerializerCompanion(): Promise<AirGapV3SerializerCompanion> {
+        return new AlgorandV3SerializerCompanion()
+    }
+
+    private createProtocol(identifier: string, network?: ProtocolNetwork): AirGapProtocol {
+        switch (identifier) {
+          case MainProtocolSymbols.ALGORAND:
+            return createAlgorandProtocol({ network })
+          default:
+            throw new ConditionViolationError(Domain.ALGORAND, `Protocol ${identifier} not supported.`)
+        }
     }
 }
