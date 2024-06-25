@@ -1,4 +1,4 @@
-// block-explorer.ts
+// Implemented Allo Block Explorer
 
 import { AirGapBlockExplorer, BlockExplorerMetadata } from "@airgap/module-kit";
 
