@@ -11,7 +11,7 @@ import {
     ProtocolNetwork
 } from '@airgap/module-kit'
 import { AlgorandBlockExplorer } from '../block-explorer/AlgorandBlockExplorer'
-import { createAlgorandProtocol, ALGORAND_MAINNET_PROTOCOL_NETWORK} from '../protocol/AlgorandProtocol'
+import { createAlgorandProtocol, ALGORAND_PROTOCOL_MAINNET_NETWORK} from '../protocol/AlgorandProtocol'
 import { AlgorandV3SerializerCompanion } from '../serializer/v3/serializer-companion'
 import { AlgorandProtocolNetwork, ProtocolIdentifier} from '../types/protocol'
 
@@ -25,7 +25,7 @@ export class AlgorandModule implements AirGapModule
 
   public constructor() {
       const networkRegistry: ModuleNetworkRegistry = new ModuleNetworkRegistry({
-        supportedNetworks: [ALGORAND_MAINNET_PROTOCOL_NETWORK]
+        supportedNetworks: [ALGORAND_PROTOCOL_MAINNET_NETWORK]
       })
     
       this.networkRegistries = {
