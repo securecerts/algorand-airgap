@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/securecerts/algorand-airgap#readme",
   "dependencies": {
-    "@airgap/module-kit": "^0.13.27"
+    "@airgap/module-kit": "^0.13.27",
+    "algosdk": "^2.8.0"
   },
   "devDependencies": {
     "typescript": "^5.5.2"
