@@ -1,3 +1,3 @@
-import { Secp256K1CryptoConfiguration } from '@airgap/module-kit'
+import { Ed25519CryptoConfiguration } from '@airgap/module-kit'
 
-export type AlgorandCryptoConfiguration = Secp256K1CryptoConfiguration
+export type AlgorandCryptoConfiguration =  Ed25519CryptoConfiguration
