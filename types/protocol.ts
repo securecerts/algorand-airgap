@@ -5,7 +5,7 @@ export enum ProtocolIdentifier {
   ALGORAND = "algorand"
 }
 
-export type AlgorandUnits = 'ALGO'
+export type AlgorandUnits = 'ALGO' | 'microAlgo'
 
 export type AlgorandNetworkType = 'mainnet' | 'testnet'
 
