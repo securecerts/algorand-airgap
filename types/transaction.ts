@@ -1,4 +1,4 @@
-import { HexString, SignedTransaction, TransactionCursor, UnsignedTransaction } from '@airgap/module-kit'
+import { SignedTransaction, TransactionCursor, UnsignedTransaction } from '@airgap/module-kit'
 
 interface SuggestedParams {
     fee: number
@@ -45,4 +45,6 @@ export interface AlgorandSignedTransaction extends SignedTransaction {
     txn: AlgorandUnsignedTransaction
 }
 
-//transaction cursor to-do
+export interface AlgorandTransactionCursor extends TransactionCursor {
+    next: string
+}
