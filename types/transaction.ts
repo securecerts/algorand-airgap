@@ -14,7 +14,7 @@ export interface AlgorandUnsignedTransaction extends UnsignedTransaction{
     to: string
     amount: number | bigint
     closeRemainderTo?: string
-    note: Uint8Array
+    note?: Uint8Array
     suggestedParams: SuggestedParams
     rekeyTo?: string
 }
