@@ -1,0 +1,78 @@
+{
+  "$ref": "#/definitions/AlgorandTransactionSignRequest",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "suggestedParams": {
+      "additionalProperties": false,
+      "properties": {
+        "fee": {
+          "type": "number"
+        },
+        "firstRound": {
+          "type": "number"
+        },
+        "flatFee": {
+          "type": "boolean"
+        },
+        "genesisHash": {
+          "type": "string"
+        },
+        "genesisID": {
+          "type": "string"
+        },
+        "lastRound": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "fee",
+        "firstRound",
+        "genesisHash",
+        "genesisID",
+        "lastRound"
+      ],
+      "type": "object"
+    },
+    "AlgorandTransactionSignRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "callbackURL": {
+          "type": "string"
+        },
+        "publicKey": {
+          "type": "string"
+        },
+        "transaction": {
+          "additionalProperties": false,
+          "properties": {
+            "from": {
+              "type": "string"
+            },
+            "to": {
+              "type": "string"
+            },
+            "amount": {
+              "type": "number"
+            },
+            "closeRemainderTo": {
+              "type": "string"
+            },
+            "note":{
+              "type": "array" 
+            },
+            "suggestedParams": {
+              "$ref": "#/definitions/suggestedParams"
+            },
+            "rekeyTo": {
+              "type": "string"
+            }
+          },
+          "required": ["from", "to", "amount", "suggestedParams"],
+          "type": "object"
+        }
+      },
+      "required": ["publicKey", "transaction"],
+      "type": "object"
+    }
+  }
+}

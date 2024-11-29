@@ -1,0 +1,36 @@
+{
+    "name": "algorand-airgap",
+    "version": "1.0.0",
+    "author": "SecureCerts <contact@securecerts.io>",
+    "url": "https://github.com/securecerts/algorand-airgap",
+    "email": "contact@securecerts.io",
+    "repository": "https://github.com/securecerts/algorand-airgap",
+    "publicKey": "0x9a1a5695aa8fe23c2f45a2c7315657cff79aa72cec023c56da9111849c13b617",
+    "description": "Public repo for integrating Algorand to AirGap via isolated modules.",
+    "src": {
+      "namespace": "algorandModule"
+    },
+    "res": {
+      "symbol": {
+        "algo": "./assets/algorand-algo-logo.svg"
+      }
+    },
+    "include": [
+      "dist/index.js",
+      "assets/algo.svg",
+      "src/**/*.ts",
+      "test/**/*.ts",
+      "package.json",
+      "tsconfig.json",
+      "manifest.json"
+    ],
+    "jsenv": {
+      "node": {
+        "require": ["algosdk", "@airgap/module-kit"]
+      },
+      "browser": {
+        "require": ["algosdk", "@airgap/module-kit"]
+      }
+    }
+  }
+  

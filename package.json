@@ -1,0 +1,55 @@
+{
+  "name": "algorand-airgap",
+  "version": "1.0.0",
+  "description": "Public repo for integrating algorand to airgap via isolated modules",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "lint": "tslint --project .",
+    "lint:fix": "tslint --fix --project .",
+    "test": "mocha --require ts-node/register test/**/*.spec.ts",
+    "prepare": "husky install",
+    "pretest": "npm run lint",
+    "generate-schemas": "ts-json-schema-generator --path './src/**/*.ts' --type '*'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/securecerts/algorand-airgap.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/securecerts/algorand-airgap/issues"
+  },
+  "homepage": "https://github.com/securecerts/algorand-airgap#readme",
+  "dependencies": {
+    "@airgap/crypto": "^0.13.35",
+    "@airgap/module-kit": "^0.13.27",
+    "algosdk": "^2.8.0",
+    "axios": "^0.20.0",
+    "bs58": "^6.0.0",
+    "qrcode-terminal": "^0.12.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.0",
+    "@types/chai-as-promised": "^7.1.0",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "^14.14.14",
+    "ajv": "^6.10.2",
+    "axios-mock-adapter": "^1.18.2",
+    "browserify": "^17.0.0",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "husky": "^5.1.3",
+    "mocha": "^9.0.0",
+    "nyc": "^15.0.0",
+    "prettier": "^2.2.1",
+    "pretty-quick": "^3.0.0",
+    "sinon": "^10.0.1",
+    "ts-json-schema-generator": "^0.56.0",
+    "ts-node": "^10.0.0",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^5.5.2"
+  }
+}
